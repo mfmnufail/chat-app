@@ -8,6 +8,7 @@ window.onload = function () {
   
   const $messages = document.querySelector("#messages")
   const $messageTemplate = document.querySelector("#message-template").innerHTML 
+  const $locationTemplate = document.querySelector("#location-template").innerHTML
 
 socket.on("message", (message) => {
   console.log(message);
@@ -21,6 +22,12 @@ socket.on("message", (message) => {
 
 socket.on("location", (location)=>{
   console.log("The location >>>" + location)
+
+  const html = Mustache.render($locationTemplate,{
+    link:location
+  })
+  $messages.insertAdjacentHTML('beforeend', html)
+
 })
 
 
