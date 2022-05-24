@@ -7,6 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const Filter = require("bad-words")
+
 // let count = 0;
 const port = process.env.PORT || 3000;
 
@@ -21,13 +23,24 @@ io.on("connection", (socket) => {
 
   socket.broadcast.emit("message", "A new user has joined!")
 
-  socket.on("chat", (input) => {
+  socket.on("chat", (input,callback) => {
+    
+    const filter = new Filter();
+    if(filter.isProfane(input)){
+      return  callback("Profanity is not allowed!");
+    }
+    
     console.log(`>> ${input}`);
     io.emit("message", input);
+
+    callback()
+
   });
 
-  socket.on("sendLocation", (pos)=>{
+  socket.on("sendLocation", (pos, callback)=>{
     io.emit("message",`https://google.com/maps?q=${pos.lat},${pos.long}`);
+
+    callback();
   })
 
 
