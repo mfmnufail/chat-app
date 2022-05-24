@@ -1,3 +1,5 @@
+
+
 const socket = io();
 window.onload = function () {
 
@@ -13,7 +15,8 @@ window.onload = function () {
 socket.on("message", (message) => {
   console.log(message);
   const html = Mustache.render($messageTemplate,{
-    message
+    message:message.text,
+    createdAt : moment(message.createdAt).format('h:mm a')
   })
 
   $messages.insertAdjacentHTML('beforeend', html)
@@ -21,10 +24,11 @@ socket.on("message", (message) => {
 });
 
 socket.on("location", (location)=>{
-  console.log("The location >>>" + location)
+  console.log("The location >>>" + location.url)
 
   const html = Mustache.render($locationTemplate,{
-    link:location
+    link:location.text,
+    createdAt: moment(location.createdAt).format('h:mm a')
   })
   $messages.insertAdjacentHTML('beforeend', html)
 

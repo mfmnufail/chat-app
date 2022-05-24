@@ -7,7 +7,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const Filter = require("bad-words")
+const Filter = require("bad-words");
+const { generateMessage } = require("./utils/generateMessage");
+const { generateLocationMessage } = require("./utils/generateLocationMessage");
 
 // let count = 0;
 const port = process.env.PORT || 3000;
@@ -21,7 +23,7 @@ let cht = null;
 io.on("connection", (socket) => {
   socket.emit("message", message);
 
-  socket.broadcast.emit("message", "A new user has joined!")
+  socket.broadcast.emit("message", generateMessage("A new user has joined!"))
 
   socket.on("chat", (input,callback) => {
     
@@ -31,21 +33,23 @@ io.on("connection", (socket) => {
     }
     
     console.log(`>> ${input}`);
-    io.emit("message", input);
+    io.emit("message", generateMessage(input));
 
     callback()
 
   });
 
   socket.on("sendLocation", (pos, callback)=>{
-    io.emit("location",`https://google.com/maps?q=${pos.lat},${pos.long}`);
+    const locationString = `https://google.com/maps?q=${pos.lat},${pos.long}`;
+    
+    io.emit("location", generateMessage(locationString));
 
     callback();
   })
 
 
   socket.on("disconnect",()=>{
-    io.emit("message", "A user has left!")
+    io.emit("message", generateMessage("A user has left!"))
   })
 });
 

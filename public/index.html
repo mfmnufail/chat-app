@@ -22,13 +22,13 @@
 
         <script id="message-template" type="text/html">
             <div>
-                <p>{{message}}</p>
+                <p>{{createdAt}} - {{message}} {{delivered}}</p>
             </div>
         </script>
 
         <script id="location-template" type="text/html">
             <div>
-                <a target="_blank" href= {{link}}> My current location</a>
+                {{createdAt}} - <a target="_blank" href= {{link}}> My current location</a>
             </div>
         </script>
        
