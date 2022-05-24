@@ -1,16 +1,33 @@
 const socket = io();
+window.onload = function () {
+
+  const $messageForm = document.querySelector("#message-form");
+  const $messageInput = $messageForm.querySelector("input")
+  const $messageButton = $messageForm.querySelector("button")
+  const $sendLocation = document.querySelector("#send-location");
+  
+  const $messages = document.querySelector("#messages")
+  const $messageTemplate = document.querySelector("#message-template").innerHTML 
 
 socket.on("message", (message) => {
   console.log(message);
+  const html = Mustache.render($messageTemplate,{
+    message
+  })
+
+  $messages.insertAdjacentHTML('beforeend', html)
+
 });
-window.onload = function () {
-const $messageForm = document.querySelector("#message-form");
-const $messageInput = $messageForm.querySelector("input")
-const $messageButton = $messageForm.querySelector("button")
-const $sendLocation = document.querySelector("#send-location");
+
+socket.on("location", (location)=>{
+  console.log("The location >>>" + location)
+})
 
 
   $messageForm.addEventListener("submit", (e) => {
+
+
+
     e.preventDefault();
       // const message = e.target.elements.message.value;
       const message = e.target.elements.message.value;
@@ -21,7 +38,7 @@ const $sendLocation = document.querySelector("#send-location");
         
         $messageInput.value = ''
         $messageInput.focus()
-        
+
       if(error){
         return console.log(error)
       }
