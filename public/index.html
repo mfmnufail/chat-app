@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel="icon" href="/img/favicon.png">
+        <link rel="stylesheet" href="/css/styles.min.css">
+    </head>
     <body>
 
-        <div id="messages"></div>
-     
+        <div class="chat">
+            <div class="chat__sidebar">
 
-        
-        <div style="text-align: center;">
-            <h1>
-                Chat Application using Socket.io!!!
-            </h1>
-            <form id="message-form">
-                <input name="message" placeholder="Message" type="text">
-                <button >Send 🚀 </button>
-            </form>
-            
-            <button id="send-location">Send Location📍 </button>
-            
+            </div>
+            <div class="chat__main">
+                <div id="messages" class="chat__messages"></div>      
+                <h1>
+                    Chat Application using Socket.io!!!
+                </h1>
+              <div class="compose">
+                <form id="message-form">
+                    <input name="message" placeholder="Message" type="text">
+                    <button >Send 🚀 </button>
+                </form>
+                
+                <button id="send-location">Send Location📍 </button>
+              </div>
+            </div>
         </div>
 
+        
+            
+     
         <script id="message-template" type="text/html">
-            <div>
-                <p>{{createdAt}} - {{message}} {{delivered}}</p>
+            <div class="message">
+                <p>
+                    <span class="message__name">Username</span>
+                    <span class="message__meta">{{createdAt}}</span>
+                </p>
+                <p>{{message}} </p>
             </div>
         </script>
 
         <script id="location-template" type="text/html">
-            <div>
-                {{createdAt}} - <a target="_blank" href= {{link}}> My current location</a>
+            <div class="message">
+                <p>
+                    <span class="message__name">Username</span>
+                    <span class="message__meta">{{createdAt}}</span>
+                </p>
+                 <a target="_blank" href= {{link}}> My current location</a>
             </div>
         </script>
        

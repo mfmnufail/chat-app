@@ -9,7 +9,7 @@ const io = new Server(server);
 
 const Filter = require("bad-words");
 const { generateMessage } = require("./utils/generateMessage");
-const { generateLocationMessage } = require("./utils/generateLocationMessage");
+
 
 // let count = 0;
 const port = process.env.PORT || 3000;
