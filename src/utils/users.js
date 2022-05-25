@@ -1,61 +1,55 @@
-const users = []
+const users = [];
 
-const addUser=({id, username, room})=>{
+const addUser = ({ id, username, room }) => {
+  username = username.trim().toLowerCase();
+  room = room.trim().toLowerCase();
 
-    username = username.trim().toLowerCase()
-    room = room.trim().toLowerCase();
-
-    if(!username || !room){
-        return {
-            error : "Username and room are required"
-        }
-    }
-
-    const existingUser = users.find(user=>{
-        return user.username === username && user.room === room
-    })
-
-    if(existingUser){
-        return {
-            error : "Username in use!"
-        }
-    }
-
-    const user = {id, username, room}
-    users.push(user)
-
-    return { user}
-}
-
-
-const removeUser=(id)=>{
-    const index = users.findIndex(user=> user.id === id);
-
-    if(index !== -1){
-       return  users.splice(index,1)[0]
-    }
-
+  if (!username || !room) {
     return {
-        error : "User not exist!"
-    }
-}
+      error: "Username and room are required",
+    };
+  }
 
-const getUser=(id)=>{
-    return users.find(user => user.id === id)
-}
+  const existingUser = users.find((user) => {
+    return user.username === username && user.room === room;
+  });
 
-const getUsersInRoom=(room)=>{
+  if (existingUser) {
+    return {
+      error: "Username in use!",
+    };
+  }
 
-    room = room.trim().toLowerCase();
-    return users.filter(user => user.room === room)
-}
+  const user = { id, username, room };
+  users.push(user);
 
+  return { user };
+};
 
-module.exports={
-    addUser,
-    removeUser,
-    getUser,
-    getUsersInRoom
-}
+const removeUser = (id) => {
+  const index = users.findIndex((user) => user.id === id);
 
- 
+  if (index !== -1) {
+    return users.splice(index, 1)[0];
+  }
+
+  return {
+    error: "User not exist!",
+  };
+};
+
+const getUser = (id) => {
+  return users.find((user) => user.id === id);
+};
+
+const getUsersInRoom = (room) => {
+  room = room.trim().toLowerCase();
+  return users.filter((user) => user.room === room);
+};
+
+module.exports = {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+};
